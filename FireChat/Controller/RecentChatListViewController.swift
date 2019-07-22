@@ -9,86 +9,162 @@
 import UIKit
 import Firebase
 import FirebaseDatabase
+import SVProgressHUD
 
 class RecentChatListViewController: UITableViewController {
+    
+    var messageList = [Message] ()
+    var messageDict = [String: Message] ()
+    
+    var noRecentChatLabel = UILabel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
-        let uid = Auth.auth().currentUser?.uid
-        Database.database().reference().child("users").child(uid!).observeSingleEvent(of: <#T##DataEventType#>, with: <#T##(DataSnapshot) -> Void#>, withCancel: <#T##((Error) -> Void)?##((Error) -> Void)?##(Error) -> Void#>)
+        
+        tableView.register(UINib.init(nibName:"ContactListViewController", bundle: nil), forCellReuseIdentifier: "customUserCell")
+        configureTableView()
+        retriveMessage()
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: contactsButtonTitle, style: .plain, target: self, action: #selector(navigationBarRightButtonTapped))
     }
 
     // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
-
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        
+        return messageList.count
     }
-
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: "customUserCell", for: indexPath) as! ContactListViewController
+        
+        var toUserEmail: String?
+        var toUserName: String?
+        if(messageList[indexPath.row].fromUser == Auth.auth().currentUser?.email) {
+            toUserEmail = messageList[indexPath.row].toUser
+        } else {
+            toUserEmail = messageList[indexPath.row].fromUser
+        }
+        let userDB = Database.database().reference().child("users")
+        userDB.observe(.childAdded) {
+            (snapshot) in
+            let snapshotValue = snapshot.value as! Dictionary<String, String>
+            
+            if(toUserEmail == snapshotValue["email"]) {
+                toUserName = snapshotValue["name"]
+            }
+            cell.avatarNameLabel.text = toUserName
+        }
+        
+        cell.avatarEmailLabel.text = messageList[indexPath.row].textMessage
+        
+        
         return cell
     }
-    */
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let cell = tableView.cellForRow(at: indexPath) as! ContactListViewController
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+        let userName = cell.avatarNameLabel.text
+        
+        let userDB = Database.database().reference().child("users")
+        userDB.observe(.childAdded) {
+            (snapshot) in
+            let snapshotValue = snapshot.value as! Dictionary<String, String>
+            let name = snapshotValue["name"]
+            let email = snapshotValue["email"]
+            if(userName == name) {
+                DispatchQueue.main.async {[weak self] in
+                    let user = User(user: name!, email: email!)
+                    let chatLogViewController = ChatLogViewController(nibName: "ChatLogViewController", bundle: nil)
+                    chatLogViewController.userInfo = user
+                    self?.navigationController?.pushViewController(chatLogViewController, animated: true)
+                }
+                
+            }
+        }
+        
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+    
+    func retriveMessage() {
+        
+        //messageList.removeAll()
+        let messageDB = Database.database().reference().child("Message")
+        messageDB.observe(.childAdded) { (snapshot) in
+            
+            //print(snapshot)
+            let snapshotValue = snapshot.value as! Dictionary<String, AnyObject>
+            
+            let from: String = snapshotValue["fromUser"] as! String
+            let to: String = snapshotValue["toUser"] as! String
+            let currentUser: String = (Auth.auth().currentUser?.email)!
+            
+            if(from == currentUser || to == currentUser) {
+                let message = Message()
+                message.fromUser = from
+                message.toUser = to
+                message.textMessage = (snapshotValue["messageBody"] as! String)
+                let timeValue: Int = (snapshotValue["timestamp"] as! Int)
+                message.timestamp = NSNumber(value: timeValue)
+                
+                print("Inside condition")
+                //self.messageList.append(message)
+                if(from == currentUser) {
+                    self.messageDict[to] = message
+                } else {
+                    self.messageDict[from] = message
+                }
+                
+            }
+            self.messageList = Array(self.messageDict.values)
+            self.messageList.sort(by: { (message1, message2) -> Bool in
+                if let time1 = message1.timestamp?.intValue, let time2 = message2.timestamp?.intValue {
+                    return time1 > time2
+                } else {
+                    return false
+                }
+                
+            })
+            self.updateUI()
+        }
+        
     }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
+    
+    @objc func navigationBarRightButtonTapped () {
+        removeSubView()
+        self.performSegue(withIdentifier: "goToContactList", sender: self)
     }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
+    
+    func updateUI() {
+        if(messageList.count == 0) {
+            showNoRecentChatText(displayText: "No Recent Chat History!")
+        } else {
+            removeSubView()
+            tableView.reloadData()
+        }
     }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    func showNoRecentChatText(displayText: String) {
+        noRecentChatLabel = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.size.width - 20, height: view.frame.size.height/2))
+        tableView.addSubview(noRecentChatLabel)
+        noRecentChatLabel.center = tableView.center
+        noRecentChatLabel.textColor = UIColor .black
+        noRecentChatLabel.font = UIFont.systemFont(ofSize: 14.0)
+        noRecentChatLabel.textAlignment = .center
+        noRecentChatLabel.lineBreakMode = .byWordWrapping
+        noRecentChatLabel.numberOfLines = 0
+        noRecentChatLabel.text = displayText
     }
-    */
+    
+    func removeSubView() {
+        for view in tableView.subviews {
+            view.removeFromSuperview()
+        }
+    }
+    
+    func configureTableView() {
+        tableView.tableFooterView = UIView()
+    }
+
 
 }

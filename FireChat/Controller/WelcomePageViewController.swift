@@ -12,7 +12,8 @@ class WelcomePageViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        self.title = appName
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: backButtonTitle, style: .plain, target: self, action: nil)
     }
 
     @IBAction func signInButtonPressed(_ sender: UIButton) {

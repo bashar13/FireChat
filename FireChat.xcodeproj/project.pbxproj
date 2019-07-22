@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		151A610722E38ADE00BF0EE4 /* ContactListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151A610522E38ADE00BF0EE4 /* ContactListViewController.swift */; };
+		151A610822E38ADE00BF0EE4 /* ContactListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 151A610622E38ADE00BF0EE4 /* ContactListViewController.xib */; };
+		151A610A22E3936B00BF0EE4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151A610922E3936B00BF0EE4 /* User.swift */; };
+		151A610D22E3A1F200BF0EE4 /* ChatLogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151A610B22E3A1F200BF0EE4 /* ChatLogViewController.swift */; };
+		151A610E22E3A1F200BF0EE4 /* ChatLogViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 151A610C22E3A1F200BF0EE4 /* ChatLogViewController.xib */; };
+		151A611022E3C21E00BF0EE4 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151A610F22E3C21E00BF0EE4 /* Message.swift */; };
+		151A611322E3F02400BF0EE4 /* ChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151A611122E3F02400BF0EE4 /* ChatTableViewCell.swift */; };
+		151A611422E3F02400BF0EE4 /* ChatTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 151A611222E3F02400BF0EE4 /* ChatTableViewCell.xib */; };
+		151A611622E544CD00BF0EE4 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151A611522E544CD00BF0EE4 /* DatabaseManager.swift */; };
 		212ACCC822C6988F00669A51 /* ContactListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212ACCC722C6988F00669A51 /* ContactListTableViewController.swift */; };
 		213978AE22C7031400558341 /* RecentChatListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 213978AD22C7031400558341 /* RecentChatListViewController.swift */; };
 		213F72D622C587E3003EA474 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 213F72D522C587E3003EA474 /* AppDelegate.swift */; };
@@ -44,6 +53,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		151A610522E38ADE00BF0EE4 /* ContactListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactListViewController.swift; sourceTree = "<group>"; };
+		151A610622E38ADE00BF0EE4 /* ContactListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ContactListViewController.xib; path = ../Controller/ContactListViewController.xib; sourceTree = "<group>"; };
+		151A610922E3936B00BF0EE4 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = User.swift; path = FireChat/Controller/User.swift; sourceTree = SOURCE_ROOT; };
+		151A610B22E3A1F200BF0EE4 /* ChatLogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLogViewController.swift; sourceTree = "<group>"; };
+		151A610C22E3A1F200BF0EE4 /* ChatLogViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ChatLogViewController.xib; path = ../Controller/ChatLogViewController.xib; sourceTree = "<group>"; };
+		151A610F22E3C21E00BF0EE4 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Message.swift; path = FireChat/Controller/Message.swift; sourceTree = SOURCE_ROOT; };
+		151A611122E3F02400BF0EE4 /* ChatTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChatTableViewCell.swift; path = ../View/ChatTableViewCell.swift; sourceTree = "<group>"; };
+		151A611222E3F02400BF0EE4 /* ChatTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatTableViewCell.xib; sourceTree = "<group>"; };
+		151A611522E544CD00BF0EE4 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		212ACCC722C6988F00669A51 /* ContactListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactListTableViewController.swift; sourceTree = "<group>"; };
 		213978AD22C7031400558341 /* RecentChatListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentChatListViewController.swift; sourceTree = "<group>"; };
 		213F72D222C587E3003EA474 /* FireChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FireChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -161,6 +179,8 @@
 		213F730322C58841003EA474 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				151A610922E3936B00BF0EE4 /* User.swift */,
+				151A610F22E3C21E00BF0EE4 /* Message.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -170,6 +190,9 @@
 			children = (
 				213F72D922C587E3003EA474 /* Main.storyboard */,
 				213F72DE22C587E5003EA474 /* LaunchScreen.storyboard */,
+				151A610622E38ADE00BF0EE4 /* ContactListViewController.xib */,
+				151A610C22E3A1F200BF0EE4 /* ChatLogViewController.xib */,
+				151A611222E3F02400BF0EE4 /* ChatTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -178,9 +201,12 @@
 			isa = PBXGroup;
 			children = (
 				213F72D722C587E3003EA474 /* WelcomePageViewController.swift */,
+				151A611122E3F02400BF0EE4 /* ChatTableViewCell.swift */,
 				213F730722C59371003EA474 /* SignInViewController.swift */,
 				212ACCC722C6988F00669A51 /* ContactListTableViewController.swift */,
 				213978AD22C7031400558341 /* RecentChatListViewController.swift */,
+				151A610522E38ADE00BF0EE4 /* ContactListViewController.swift */,
+				151A610B22E3A1F200BF0EE4 /* ChatLogViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -191,6 +217,7 @@
 				213F730922C5BC55003EA474 /* Constants.swift */,
 				2184218A22C6C81600FD29DE /* AlertDialog.swift */,
 				2184218C22C6CF7300FD29DE /* Connectivity.swift */,
+				151A611522E544CD00BF0EE4 /* DatabaseManager.swift */,
 			);
 			path = SupportingFiles;
 			sourceTree = "<group>";
@@ -327,8 +354,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				213F72E022C587E5003EA474 /* LaunchScreen.storyboard in Resources */,
+				151A610E22E3A1F200BF0EE4 /* ChatLogViewController.xib in Resources */,
+				151A610822E38ADE00BF0EE4 /* ContactListViewController.xib in Resources */,
 				21FB80C022C5E3BF004B8BA3 /* GoogleService-Info.plist in Resources */,
 				213F72DD22C587E5003EA474 /* Assets.xcassets in Resources */,
+				151A611422E3F02400BF0EE4 /* ChatTableViewCell.xib in Resources */,
 				213F72DB22C587E3003EA474 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -459,11 +489,17 @@
 			files = (
 				2184218B22C6C81600FD29DE /* AlertDialog.swift in Sources */,
 				213F72D822C587E3003EA474 /* WelcomePageViewController.swift in Sources */,
+				151A610722E38ADE00BF0EE4 /* ContactListViewController.swift in Sources */,
 				213F72D622C587E3003EA474 /* AppDelegate.swift in Sources */,
 				213F730822C59371003EA474 /* SignInViewController.swift in Sources */,
 				212ACCC822C6988F00669A51 /* ContactListTableViewController.swift in Sources */,
+				151A611622E544CD00BF0EE4 /* DatabaseManager.swift in Sources */,
 				213978AE22C7031400558341 /* RecentChatListViewController.swift in Sources */,
+				151A610D22E3A1F200BF0EE4 /* ChatLogViewController.swift in Sources */,
 				213F730A22C5BC55003EA474 /* Constants.swift in Sources */,
+				151A611022E3C21E00BF0EE4 /* Message.swift in Sources */,
+				151A610A22E3936B00BF0EE4 /* User.swift in Sources */,
+				151A611322E3F02400BF0EE4 /* ChatTableViewCell.swift in Sources */,
 				2184218D22C6CF7300FD29DE /* Connectivity.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

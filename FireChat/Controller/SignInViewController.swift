@@ -8,58 +8,67 @@
 
 import UIKit
 import Firebase
+import SVProgressHUD
 
 class SignInViewController: UIViewController {
 
     var signInType = SignInCategory.login
-    @IBOutlet weak var signInButton: UIButton!
     
+    @IBOutlet weak var signInButton: UIButton!
+    @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
+    
+    //constants related to signIn Box
+    @IBOutlet weak var topMargEmailTextField: NSLayoutConstraint!
+    @IBOutlet weak var heightSignInContainerView: NSLayoutConstraint!
+    @IBOutlet weak var singInBoxYMargin: NSLayoutConstraint!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setSignInButtonText()
+        self.title = "Sign In"
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: backButtonTitle, style: .plain, target: self, action: nil)
+        
+        setSignInContainerView()
     }
     
-    func setSignInButtonText() {
+    private func setSignInContainerView() {
         
         switch signInType {
         case .login:
             signInButton.setTitle(buttonStringConstants.login.rawValue, for: .normal)
+            heightSignInContainerView.constant = SignInContainerViewHeight.loginView.rawValue
+            topMargEmailTextField.constant = EmailTextFieldTopMargin.loginView.rawValue
+            nameTextField.isHidden = true
             break;
         case .register:
             signInButton.setTitle(buttonStringConstants.register.rawValue, for: .normal)
+            heightSignInContainerView.constant = SignInContainerViewHeight.registerView.rawValue
+            topMargEmailTextField.constant = EmailTextFieldTopMargin.registerView.rawValue
+            nameTextField.isHidden = false
             break;
         }
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
     @IBAction func signInButtonPressed(_ sender: UIButton) {
-        
+        SVProgressHUD.show()
         if Connectivity.isConnectedToInternet {
             
+            let name = nameTextField.text ?? "no name"
             switch signInType {
             case .login:
                 Auth.auth().signIn(withEmail: emailTextField.text!, password: passwordTextField.text!) { (user, error) in
                     if( error != nil) {
                         print(error!)
                         let titleString: String = "Error to " + sender.title(for: .normal)!
-                        self.createSignInErrorAlert(title: titleString)
+                        AlertDialog.createSignInErrorAlert(title: titleString, controllerVC: self)
                     } else {
                         print("Succefull login")
-                        //SVProgressHUD.dismiss()
+                        
                         self.performSegue(withIdentifier: "goToRecentChatList", sender: self)
                     }
+                    SVProgressHUD.dismiss()
                 }
                 break;
             case .register:
@@ -68,36 +77,40 @@ class SignInViewController: UIViewController {
                         print(error!)
                         let titleString: String = "Error to " + sender.title(for: .normal)!
                         
-                        self.createSignInErrorAlert(title: titleString)
+                        AlertDialog.createSignInErrorAlert(title: titleString, controllerVC: self)
                         
                     } else {
                         //success
                         print("registration success")
-                        //SVProgressHUD.dismiss()
-                        self.createUserInDB()
+                        self.createUserInDB(userID: Auth.auth().currentUser?.uid, userName: name)
                         self.performSegue(withIdentifier: "goToContactList", sender: self)
                     }
+                    SVProgressHUD.dismiss()
                 }
                 break;
             }
             
         } else {
+            SVProgressHUD.dismiss()
             AlertDialog.createNoInternetAlert(controllerVC: self)
         }
     }
     
-    func createSignInErrorAlert(title: String) {
+    func createUserInDB(userID: String?, userName: String) {
         
-        let message: String = "Invalid email address or password!"
-        let alertAction = UIAlertAction(title: AlertActionConstants.buttonOk.rawValue, style: .default, handler: nil)
-        
-        AlertDialog.showAlert(title: title, message: message, controllerVC: self, actionPositive: alertAction)
-    }
-    
-    func createUserInDB(user: FIRUser?) {
-        guard let uid = User?.UID else {
-            return
+        if let user = userID {
+            let userDB = Database.database().reference().child("users").child(user)
+            let userDict = ["name": userName, "email": String(self.emailTextField.text!)]
+            
+            userDB.setValue(userDict) {
+                (error, reference) in
+                if(error != nil) {
+                    print(error!)
+                } else {
+                    print("user added succesfully")
+                }
+            }
         }
-        let userDB = Database.database().reference().child("users").child(uid)
+        
     }
 }

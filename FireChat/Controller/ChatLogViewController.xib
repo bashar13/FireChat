@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ChatLogViewController" customModule="FireChat" customModuleProvider="target">
+            <connections>
+                <outlet property="messageTextField" destination="VEP-69-ufR" id="zyn-Xf-0rE"/>
+                <outlet property="sendButton" destination="tWX-z2-S8j" id="LGq-XY-ymO"/>
+                <outlet property="tableView" destination="kkx-Te-Fgv" id="MsM-PS-pLk"/>
+                <outlet property="textFieldBottomMargin" destination="54Q-S4-T6I" id="Ipj-If-4zv"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="kkx-Te-Fgv">
+                    <rect key="frame" x="0.0" y="44" width="414" height="763"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </tableView>
+                <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="45" translatesAutoresizingMaskIntoConstraints="NO" id="pRz-2K-jpk">
+                    <rect key="frame" x="20" y="60" width="374" height="45"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="pRz-2K-jpk" id="TIy-SV-slI">
+                        <rect key="frame" x="0.0" y="0.0" width="374" height="44.5"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </tableViewCellContentView>
+                </tableViewCell>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YuL-RR-RcP" userLabel="ContainerView">
+                    <rect key="frame" x="0.0" y="807" width="414" height="55"/>
+                    <subviews>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VEP-69-ufR">
+                            <rect key="frame" x="10" y="10" width="339" height="35"/>
+                            <nil key="textColor"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tWX-z2-S8j">
+                            <rect key="frame" x="359" y="10" width="45" height="35"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="45" id="Oto-mX-04b"/>
+                            </constraints>
+                            <state key="normal" title="Send"/>
+                            <connections>
+                                <action selector="sendButtonPressed:" destination="-1" eventType="touchUpInside" id="eyK-S8-7WF"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="tWX-z2-S8j" secondAttribute="trailing" constant="10" id="6vb-GQ-aF9"/>
+                        <constraint firstItem="VEP-69-ufR" firstAttribute="leading" secondItem="YuL-RR-RcP" secondAttribute="leading" constant="10" id="D6L-Dh-A54"/>
+                        <constraint firstItem="tWX-z2-S8j" firstAttribute="leading" secondItem="VEP-69-ufR" secondAttribute="trailing" constant="10" id="O7c-p9-ty4"/>
+                        <constraint firstAttribute="height" constant="55" id="faN-sX-cFT"/>
+                        <constraint firstAttribute="bottom" secondItem="VEP-69-ufR" secondAttribute="bottom" constant="10" id="grl-DR-Jmy"/>
+                        <constraint firstAttribute="bottom" secondItem="tWX-z2-S8j" secondAttribute="bottom" constant="10" id="igH-SO-4lf"/>
+                        <constraint firstItem="tWX-z2-S8j" firstAttribute="top" secondItem="YuL-RR-RcP" secondAttribute="top" constant="10" id="l9R-2a-ZiU"/>
+                        <constraint firstItem="VEP-69-ufR" firstAttribute="top" secondItem="YuL-RR-RcP" secondAttribute="top" constant="10" id="wQZ-O3-qNz"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="YuL-RR-RcP" secondAttribute="bottom" id="54Q-S4-T6I"/>
+                <constraint firstItem="kkx-Te-Fgv" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="DqE-FP-lBZ"/>
+                <constraint firstItem="kkx-Te-Fgv" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="Krs-rD-a0b"/>
+                <constraint firstItem="YuL-RR-RcP" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="LaA-PI-wCU"/>
+                <constraint firstItem="kkx-Te-Fgv" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="NEP-A6-R0i"/>
+                <constraint firstItem="YuL-RR-RcP" firstAttribute="top" secondItem="kkx-Te-Fgv" secondAttribute="bottom" id="XAS-MC-iQB"/>
+                <constraint firstItem="YuL-RR-RcP" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="f3J-xr-O1v"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <point key="canvasLocation" x="-142.02898550724638" y="147.99107142857142"/>
+        </view>
+    </objects>
+</document>

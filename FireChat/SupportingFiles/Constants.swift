@@ -8,6 +8,11 @@
 
 import UIKit
 
+let appName = Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") as! String
+let backButtonTitle = "Back"
+let logoutButtonTitle = "Logout"
+let contactsButtonTitle = "Contacts"
+
 enum SignInCategory: Int {
     
     case login = 0
@@ -30,4 +35,14 @@ enum AlertActionConstants: String {
     case buttonOk = "OK"
     case buttonCancel = "Cancel"
     case buttonOpenSettings = "Open Settings"
+}
+
+enum SignInContainerViewHeight: CGFloat {
+    case loginView = 165
+    case registerView = 215
+}
+
+enum EmailTextFieldTopMargin: CGFloat {
+    case loginView = 10
+    case registerView = 60
 }

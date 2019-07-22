@@ -36,6 +36,14 @@ class AlertDialog {
         showAlert(title: alertTitle, message: alertMessage, controllerVC: controllerVC, actionPositive: positiveAction, actionNegative: negativeAction)
     }
     
+    static func createSignInErrorAlert(title: String, controllerVC: UIViewController) {
+        
+        let message: String = "Invalid email address or password!"
+        let alertAction = UIAlertAction(title: AlertActionConstants.buttonOk.rawValue, style: .default, handler: nil)
+        
+        showAlert(title: title, message: message, controllerVC: controllerVC, actionPositive: alertAction)
+    }
+    
     static func openSettings(alert: UIAlertAction!) {
         if let url = URL.init(string: UIApplication.openSettingsURLString) {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
